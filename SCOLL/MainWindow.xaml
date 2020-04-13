@@ -1,0 +1,149 @@
+﻿<Fluent:RibbonWindow
+        x:Class="SCOLL.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Fluent="urn:fluent-ribbon"
+        xmlns:local="clr-namespace:SCOLL"
+    xmlns:notifications="clr-namespace:Notifications.Wpf.Controls;assembly=Notifications.Wpf"
+    mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" KeyDown="RibbonWindow_KeyDown">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+
+            <!-- Header /hed/ -->
+            <Fluent:Ribbon Grid.Row="0">
+                <!--Backstage-->
+                <Fluent:Ribbon.Menu>
+                    <Fluent:Backstage>
+                        <Fluent:BackstageTabControl>
+                            <Fluent:BackstageTabItem Header="Main">
+                                <Grid>
+                                    <Label Content="Main"></Label>
+                                    <Button Name="hed_bckstg_btn_openLastDir" Content="Open Directory of last saved File" Click="hed_bckstg_btn_openLastDir_Click" Width="350" Height="50" />
+                                </Grid>                                
+                            </Fluent:BackstageTabItem>
+                            <Fluent:BackstageTabItem Header="Credit">
+                                <Grid>
+                                    <Label Margin="0,0,0,0" Content="Developer: Justin Pradel"></Label>
+                                    <Label Margin="0,20,0,0" Content="Icons: Apancik (https://github.com/apancik/public-domain-icons)"></Label>
+                                </Grid>
+                            </Fluent:BackstageTabItem>
+                            <Fluent:Button Header="Blue" />
+                        </Fluent:BackstageTabControl>
+                    </Fluent:Backstage>
+                </Fluent:Ribbon.Menu>
+
+                <!--Tabs-->
+                <Fluent:RibbonTabItem Header="Home">
+                    <Fluent:RibbonGroupBox Header="Main">
+                        <Fluent:Button Header="New"
+                           Icon="C:\Users\Justin\SCOLL\SCOLL\assets\icons\new.png"
+                           LargeIcon="C:\Users\Justin\SCOLL\SCOLL\assets\icons\new.png"
+                           Click="hed_main_btn_new_click"/>
+                        <Fluent:Button Header="Save"
+                           Icon="C:\Users\Justin\SCOLL\SCOLL\assets\icons\save.png"
+                           LargeIcon="C:\Users\Justin\SCOLL\SCOLL\assets\icons\save.png" 
+                           Click="hed_main_btn_save_click"/>
+                        <Fluent:Button Header="Export"
+                           Icon="C:\Users\Justin\SCOLL\SCOLL\assets\icons\export.png"
+                           LargeIcon="C:\Users\Justin\SCOLL\SCOLL\assets\icons\export.png" 
+                           Click="hed_main_btn_export_click"/>
+                        <Fluent:Button Header="Export PDF"
+                           Icon="C:\Users\Justin\SCOLL\SCOLL\assets\icons\export.png"
+                           LargeIcon="C:\Users\Justin\SCOLL\SCOLL\assets\icons\export.png" 
+                           Click="hed_main_btn_export_pdf_click"/>
+                        <Fluent:Button Header="Load"
+                           Icon="C:\Users\Justin\SCOLL\SCOLL\assets\icons\refresh.png"
+                           LargeIcon="C:\Users\Justin\SCOLL\SCOLL\assets\icons\refresh.png" 
+                           Click="hed_main_btn_load_click"/>
+                    </Fluent:RibbonGroupBox>
+                    <Fluent:RibbonGroupBox Header="Label" Width="300">
+                        <Fluent:TextBox Name="hed_main_tb_label_text" Header="Text" Width="240" TextChanged="hed_main_tb_label_text_TextChanged"/>
+                        <Fluent:ComboBox Header="Font" Name="hed_main_cb_label_font" SelectionChanged="hed_main_cb_label_font_SelectionChanged" DropDownClosed="hed_main_cb_label_font_DropDownClosed">
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem">
+                                    <EventSetter Event="Loaded" Handler="ComboBox_Loaded" />
+                                    <EventSetter Event="Unloaded" Handler="ComboBox_Unloaded" />
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                        </Fluent:ComboBox>
+                        <Fluent:TextBox Header="Text Size" Name="hed_main_cb_label_fontSize" TextChanged="hed_main_cb_label_fontSize_TextChanged"/>
+                        <Fluent:Button Header="Delete" Name="hed_label_btn_delete"
+                            Icon="C:\Users\Justin\Documents\SCOLL\SCOLL\assets\icons\delete.png"
+                            LargeIcon="C:\Users\Justin\Documents\SCOLL\SCOLL\assets\icons\delete.png"
+                                       Click="hed_label_btn_delete_click"
+                                       />
+                    </Fluent:RibbonGroupBox>
+                </Fluent:RibbonTabItem>
+            </Fluent:Ribbon>
+
+            <Grid Grid.Row="1" Background="Gray">
+                <!-- Content /cnt/ -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ScrollViewer Grid.Row="0" Name="cnt_scrollviewer" FlowDirection="LeftToRight" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <Canvas x:Name="grd_content" Background="Gray" Width="{Binding Width, ElementName=cnt_image}" Height="{Binding Height, ElementName=cnt_image}">
+                        <Canvas.LayoutTransform>
+                            <TransformGroup>
+                                <ScaleTransform x:Name="scaleTransform"/>
+                            </TransformGroup>
+                        </Canvas.LayoutTransform>
+                        <!--  -->
+                        <Viewbox>
+                            <Grid Name="cnt_grd_parent">
+                                <Grid>
+                                    <Image Name="cnt_image" Stretch="Fill" MouseMove="cnt_image_MouseMove" />
+                                </Grid>
+                                <Canvas Name="cnt_labels"></Canvas>
+                            </Grid>
+                        </Viewbox>
+                    </Canvas>
+                </ScrollViewer>
+                <Slider Background="White" Name="cnt_slider" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch" />
+            </Grid>
+
+            <!-- Footer /ft/ -->
+            <Grid Grid.Row="2">
+                <StatusBar DockPanel.Dock="Bottom">
+                    <StatusBar.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="100" />
+                                </Grid.ColumnDefinitions>
+                            </Grid>
+                        </ItemsPanelTemplate>
+                    </StatusBar.ItemsPanel>
+                    <StatusBarItem>
+                        <TextBlock Name="ft_tb_cursor" />
+                    </StatusBarItem>
+                    <Separator Grid.Column="1" />
+                    <StatusBarItem Grid.Column="2">
+                        <TextBlock Name="ft_tb_currentpath" Text="" />
+                    </StatusBarItem>
+                    <Separator Grid.Column="3" />
+                    <StatusBarItem Grid.Column="4">
+                        <ProgressBar Name="ft_prog_currentprogress" Value="0" Width="90" Height="16" />
+                    </StatusBarItem>
+                </StatusBar>
+            </Grid>
+        </Grid>
+
+        <!-- I wont even try to make a grid for this... -->
+        <notifications:NotificationArea x:Name="WindowArea" Position="BottomRight" MaxItems="3"/>
+    </Grid>
+</Fluent:RibbonWindow>
