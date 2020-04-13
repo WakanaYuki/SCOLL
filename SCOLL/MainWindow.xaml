@@ -77,8 +77,8 @@
                         </Fluent:ComboBox>
                         <Fluent:TextBox Header="Text Size" Name="hed_main_cb_label_fontSize" TextChanged="hed_main_cb_label_fontSize_TextChanged"/>
                         <Fluent:Button Header="Delete" Name="hed_label_btn_delete"
-                            Icon="C:\Users\Justin\Documents\SCOLL\SCOLL\assets\icons\delete.png"
-                            LargeIcon="C:\Users\Justin\Documents\SCOLL\SCOLL\assets\icons\delete.png"
+                            Icon="C:\Users\Justin\SCOLL\SCOLL\assets\icons\delete.png"
+                            LargeIcon="C:\Users\Justin\SCOLL\SCOLL\assets\icons\delete.png"
                                        Click="hed_label_btn_delete_click"
                                        />
                     </Fluent:RibbonGroupBox>
