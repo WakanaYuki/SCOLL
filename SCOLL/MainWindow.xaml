@@ -108,7 +108,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    <ScrollViewer Grid.RowSpan="2" Grid.ColumnSpan="2" Name="cnt_scrollviewer" FlowDirection="LeftToRight" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Name="cnt_scrollviewer" FlowDirection="LeftToRight" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
                         <Canvas x:Name="grd_content" Background="Gray" Width="{Binding Width, ElementName=cnt_image}" Height="{Binding Height, ElementName=cnt_image}">
                             <Canvas.LayoutTransform>
                                 <TransformGroup>
@@ -126,6 +126,7 @@
                             </Viewbox>
                         </Canvas>
                     </ScrollViewer>
+                    <!-- Source: https://stackoverflow.com/a/1601994 -->
                     <Label Name="lbl_fade" Content="This Program is in an early alpha state. This Product is not final and many things are due to change" FontSize="18" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3">
                         <Label.Style>
                             <Style TargetType="{x:Type Label}">

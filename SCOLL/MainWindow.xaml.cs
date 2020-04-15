@@ -108,6 +108,7 @@ namespace SCOLL
             StartAnimationofFadeText();
         }
 
+        //Source: https://stackoverflow.com/a/1601994
         private void StartAnimationofFadeText()
         {
             //Make the label visible, starting the storyboard.
