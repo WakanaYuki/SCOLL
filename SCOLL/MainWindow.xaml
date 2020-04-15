@@ -4,11 +4,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
+        xmlns:adonisControls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+        xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
         xmlns:Fluent="urn:fluent-ribbon"
         xmlns:local="clr-namespace:SCOLL"
-    xmlns:notifications="clr-namespace:Notifications.Wpf.Controls;assembly=Notifications.Wpf"
-    mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" KeyDown="RibbonWindow_KeyDown">
+        xmlns:notifications="clr-namespace:Notifications.Wpf.Controls;assembly=Notifications.Wpf"
+        mc:Ignorable="d"
+        Title="S C O L L" Height="450" Width="800" KeyDown="RibbonWindow_KeyDown">
+    <Window.Style>
+        <Style TargetType="{x:Type Window}" BasedOn="{StaticResource {x:Type Window}}"/>
+    </Window.Style>
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -28,7 +34,7 @@
                                 <Grid>
                                     <Label Content="Main"></Label>
                                     <Button Name="hed_bckstg_btn_openLastDir" Content="Open Directory of last saved File" Click="hed_bckstg_btn_openLastDir_Click" Width="350" Height="50" />
-                                </Grid>                                
+                                </Grid>
                             </Fluent:BackstageTabItem>
                             <Fluent:BackstageTabItem Header="Credit">
                                 <Grid>
@@ -91,24 +97,55 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <ScrollViewer Grid.Row="0" Name="cnt_scrollviewer" FlowDirection="LeftToRight" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <Canvas x:Name="grd_content" Background="Gray" Width="{Binding Width, ElementName=cnt_image}" Height="{Binding Height, ElementName=cnt_image}">
-                        <Canvas.LayoutTransform>
-                            <TransformGroup>
-                                <ScaleTransform x:Name="scaleTransform"/>
-                            </TransformGroup>
-                        </Canvas.LayoutTransform>
-                        <!--  -->
-                        <Viewbox>
-                            <Grid Name="cnt_grd_parent">
-                                <Grid>
-                                    <Image Name="cnt_image" Stretch="Fill" MouseMove="cnt_image_MouseMove" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <ScrollViewer Grid.RowSpan="2" Grid.ColumnSpan="2" Name="cnt_scrollviewer" FlowDirection="LeftToRight" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                        <Canvas x:Name="grd_content" Background="Gray" Width="{Binding Width, ElementName=cnt_image}" Height="{Binding Height, ElementName=cnt_image}">
+                            <Canvas.LayoutTransform>
+                                <TransformGroup>
+                                    <ScaleTransform x:Name="scaleTransform"/>
+                                </TransformGroup>
+                            </Canvas.LayoutTransform>
+                            <!--  -->
+                            <Viewbox>
+                                <Grid Name="cnt_grd_parent">
+                                    <Grid>
+                                        <Image Name="cnt_image" Stretch="Fill" MouseMove="cnt_image_MouseMove" />
+                                    </Grid>
+                                    <Canvas Name="cnt_labels"></Canvas>
                                 </Grid>
-                                <Canvas Name="cnt_labels"></Canvas>
-                            </Grid>
-                        </Viewbox>
-                    </Canvas>
-                </ScrollViewer>
+                            </Viewbox>
+                        </Canvas>
+                    </ScrollViewer>
+                    <Label Name="lbl_fade" Content="This Program is in an early alpha state. This Product is not final and many things are due to change" FontSize="18" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3">
+                        <Label.Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Style.Triggers>
+                                    <Trigger Property="Visibility" Value="Visible">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="00:00:00" BeginTime="00:00:00" From="0.0" To="1.0" />
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="00:00:03" BeginTime="00:00:10" From="1.0" To="0.0" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.EnterActions>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <TextBlock Name="lbl_info_watermark" Text="Alpha Version v1.0" Opacity="0.5" FontSize="24" FontFamily="Arial Black" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="250" Height="28" Grid.Row="2" Grid.ColumnSpan="2" />
+                </Grid>
                 <Slider Background="White" Name="cnt_slider" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch" />
             </Grid>
 

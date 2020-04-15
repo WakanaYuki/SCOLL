@@ -1,4 +1,13 @@
-﻿using Notifications.Wpf;
+﻿/*
+ ToDo: 
+    Clean up this mess of a class someday
+    Add support for Colored Labels
+    Add Global Settings
+    Add Updater
+
+ */
+
+using Notifications.Wpf;
 using SCOLL.Classes.Logic;
 using SCOLL.Classes.Properties;
 using System;
@@ -65,7 +74,6 @@ namespace SCOLL
         public IMainWindowHelper mwh;
         public MainWindow()
         {
-            string uri = new Uri("C:/Users/Justin/Documents/SCOLL/SCOLL/assets/icons/new.png").ToString();
             information = new InformationProp();
             //Load Interface
             mwh = new MainWindowhelper();
@@ -97,6 +105,25 @@ namespace SCOLL
 
             //Get all available fonts
             GetFonts();
+            StartAnimationofFadeText();
+        }
+
+        private void StartAnimationofFadeText()
+        {
+            //Make the label visible, starting the storyboard.
+            lbl_fade.Visibility = Visibility.Visible;
+
+            System.Windows.Threading.DispatcherTimer t = new System.Windows.Threading.DispatcherTimer();
+            //Set the timer interval to the length of the animation.
+            t.Interval = new TimeSpan(0, 0, 50);
+            t.Tick += (EventHandler)delegate (object snd, EventArgs ea)
+            {
+                // The animation will be over now, collapse the label.
+                lbl_fade.Visibility = Visibility.Collapsed;
+                // Get rid of the timer.
+                ((System.Windows.Threading.DispatcherTimer)snd).Stop();
+            };
+            t.Start();
         }
 
         private void GetFonts()
@@ -239,6 +266,7 @@ namespace SCOLL
                 hed_main_tb_label_text.Focus();
                 _isMoving = false;
                 LabelHelper lbl = new LabelHelper();
+                lbl.label.Foreground = Brushes.Black;
                 lbl.label.Content = "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest";
                 lbl.label.Name = "lbl_gen_cnt_" + text_on_image.Count;
                 lbl.label.Margin = new Thickness(mouseLocation.X + 10, mouseLocation.Y + 10, mouseLocation.X + 10, mouseLocation.Y + 10);
@@ -285,23 +313,30 @@ namespace SCOLL
 
         private void hed_main_btn_new_click(object sender, RoutedEventArgs e)
         {
-            Reset();
-            BitmapImage image = mwh.OpenNewImageDialog();
-            currentSave = image.UriSource.LocalPath.ToString();
-            currentBitmap = BitmapImage2Bitmap(image);
-            if (image != null)
+            try
             {
-                ft_tb_currentpath.Text = image.UriSource.ToString();
-                cnt_image.Height = image.Height;
-                cnt_image.Width = image.Width;
-                cnt_image.Source = image;
-                information.ImageUri = image.UriSource.ToString();
-                ShowHiddenStartContent();
+                Reset();
+                BitmapImage image = mwh.OpenNewImageDialog();
+                currentSave = image.UriSource.LocalPath.ToString();
+                currentBitmap = BitmapImage2Bitmap(image);
+                if (image != null)
+                {
+                    ft_tb_currentpath.Text = image.UriSource.ToString();
+                    cnt_image.Height = image.Height;
+                    cnt_image.Width = image.Width;
+                    cnt_image.Source = image;
+                    information.ImageUri = image.UriSource.ToString();
+                    ShowHiddenStartContent();
+                }
+                else
+                {
+                    ShowNotification(NotificationType.Error, "Error", "Couldn't load image. Please try again.");
+                }
             }
-            else
+            catch (NullReferenceException)
             {
-                ShowNotification(NotificationType.Error, "Error", "Couldn't load image. Please try again.");
-            }
+                ShowNotification(NotificationType.Error, "Image of file not found", "Image referenced in the file wasn't found.");
+            }            
         }
 
         private void hed_main_btn_load_click(object sender, RoutedEventArgs e)
@@ -322,6 +357,7 @@ namespace SCOLL
                 lbl.label.Name = item.Name;
                 lbl.label.Content = item.Content;
                 lbl.label.Margin = new Thickness(item.Margin.Left, item.Margin.Top, item.Margin.Left, item.Margin.Top);
+                lbl.label.Foreground = Brushes.Black;
                 lbl.label.FontSize = item.FontSize;
                 System.Windows.Media.FontFamily font = new System.Windows.Media.FontFamily(item.Font);
                 lbl.label.FontFamily = font;
@@ -709,7 +745,17 @@ namespace SCOLL
         //Clear Preview Font and replace with last selected Font
         private void hed_main_cb_label_font_DropDownClosed(object sender, EventArgs e)
         {
-            text_on_image[currentLabelIndex].label.FontFamily = text_on_image[currentLabelIndex].Font.currentFont;
+            if (currentLabelIndex != null && currentLabelIndex != 0)
+            {
+                try
+                {
+                    text_on_image[currentLabelIndex].label.FontFamily = text_on_image[currentLabelIndex].Font.currentFont;
+                }
+                catch (IndexOutOfRangeException ex)
+                {
+                    //Ignore, because that is normal, when nothing is selected.
+                }
+            }
         }
 
         //Size change

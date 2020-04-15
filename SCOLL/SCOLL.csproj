@@ -4,10 +4,13 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>assets\logo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fluent.Ribbon" Version="7.0.1" />
+    <PackageReference Include="AdonisUI" Version="1.14.0" />
+    <PackageReference Include="AdonisUI.ClassicTheme" Version="1.14.0" />
+    <PackageReference Include="Fluent.Ribbon" Version="7.1.0" />
     <PackageReference Include="Notifications.Wpf" Version="0.1.1" />
     <PackageReference Include="PdfSharp" Version="1.50.5147" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.7.0" />
