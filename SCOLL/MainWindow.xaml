@@ -40,7 +40,14 @@
                                 <Grid>
                                     <Label Margin="0,0,0,0" Content="Developer: Justin Pradel"></Label>
                                     <Label Margin="0,20,0,0" Content="Icons: Apancik (https://github.com/apancik/public-domain-icons)"></Label>
-                                </Grid>
+                                <Label Margin="0,40,0,0" Content="Fluent.Ribbon: Bastian Schmidt, Degtyarev Daniel, Roller Serg (https://github.com/fluentribbon/Fluent.Ribbon)"></Label>
+<Label Margin="0,60,0,0" Content="AdonisUI: Benjamin Rühl (https://github.com/benruehl/adonis-ui)"></Label>
+<Label Margin="0,80,0,0" Content="Notifications.WPF: xfedererx (https://github.com/Federer/Notifications.WPF)"></Label>
+<Label Margin="0,100,0,0" Content="PDFsharp: empira Software GmbH (https://www.PDFsharp.net/)"></Label>
+                                
+                                                                
+                                
+</Grid>
                             </Fluent:BackstageTabItem>
                             <Fluent:Button Header="Blue" />
                         </Fluent:BackstageTabControl>
